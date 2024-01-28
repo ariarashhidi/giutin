@@ -107,21 +107,20 @@ int main(int JJ , char *khalse[]){
         }
         else{
             if(strcmp(khalse[2] , "-global")==0){
-                printf("vvv\n");
                 if(JJ < 5){
                     printf("wrong\n");
                 }
                 else{
                     FILE *file1 = fopen(".giutin/config" , "r");
-                    char name[40] , email[40] , branch[40];
+                    char name[40] , name2[40] , email[40] , email2[40] , branch[40] , branch2[40] , last[40] , current[50];
                     int last_commit , current_commit_ID ;
-                    fscanf(file1 , "username: %s" , name);
-                    fscanf(file1 , "email: %s" , email);
-                    fscanf(file1 , "last_commit_ID: %d"  , &last_commit);
-                    fscanf(file1 , "current_commit_ID: %d" , &current_commit_ID);
-                    fscanf(file1 , "branch: %s" , branch);
+                    fscanf(file1 , "%s %s" ,name2 , name);
+                    fscanf(file1 , "%s %s" ,email2 ,  email);
+                    fscanf(file1 , "%s %d"  ,last ,  &last_commit);
+                    fscanf(file1 , "%s %d" , current , &current_commit_ID);
+                    fscanf(file1 , "%s %s" ,branch2 ,  branch);
+
                     if(strcmp(khalse[3] , "user.name")==0){
-                        printf("vv\n");
                         FILE *file = fopen(".giutin/config1", "w");
                         fprintf(file, "username: %s\n", khalse[4]);
                         fprintf(file, "email: %s\n", email);
@@ -132,10 +131,18 @@ int main(int JJ , char *khalse[]){
                         fclose(file1);
                         remove(".giutin/config");
                         rename(".giutin/config1" , ".giutin/config");
-
                     }
                     else if(strcmp(khalse[3] , "user.email")==0){
-
+                        FILE *file = fopen(".giutin/config1", "w");
+                        fprintf(file, "username: %s\n", name);
+                        fprintf(file, "email: %s\n", khalse[4]);
+                        fprintf(file, "last_commit_ID: %d\n", last_commit);
+                        fprintf(file, "current_commit_ID: %d\n", current_commit_ID);
+                        fprintf(file, "branch: %s", branch);
+                        fclose(file);
+                        fclose(file1);
+                        remove(".giutin/config");
+                        rename(".giutin/config1" , ".giutin/config");
                     }
                 }
             }
