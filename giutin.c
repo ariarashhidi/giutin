@@ -57,7 +57,12 @@ int run_init(int argc, char * const argv[]) {
         
     if (!exists) {
         if (mkdir(".giutin", 0755) != 0) return 1;
-        return create_configs("aria", "ariarashidiqw@gmail.com");
+        char cwd[1000];
+        getcwd(cwd , 1000);
+        FILE* file = fopen("/home/aria/Desktop/address.txt" , "a");
+        fprintf(file , "%s\n" , cwd);
+        // printf("%s\n" , cwd);
+        return create_configs("aria" , "ariarashidiqw@gmail.com");
     } else {
         perror("giutin repository has already initialized");
     }
@@ -98,10 +103,18 @@ int main(int JJ , char *khalse[]){
     print_comnd(JJ , khalse);
 
     if(strcmp(khalse[1] , "init")==0){
-        printf("11\n");
+        
         return run_init(JJ , khalse);
     }
     if(strcmp(khalse[1] , "config")==0){
+        // FILE *file1 = fopen(".giutin/config" , "r");
+        // char name[40] , name2[40] , email[40] , email2[40] , branch[40] , branch2[40] , last[40] , current[50];
+        // int last_commit , current_commit_ID ;
+        // fscanf(file1 , "%s %s" ,name2 , name);
+        // fscanf(file1 , "%s %s" ,email2 ,  email);
+        // fscanf(file1 , "%s %d"  ,last ,  &last_commit);
+        // fscanf(file1 , "%s %d" , current , &current_commit_ID);
+        // fscanf(file1 , "%s %s" ,branch2 ,  branch);
         if(JJ <4 || JJ>=6){
             printf("wrong\n");
         }
@@ -111,7 +124,86 @@ int main(int JJ , char *khalse[]){
                     printf("wrong\n");
                 }
                 else{
-                    FILE *file1 = fopen(".giutin/config" , "r");
+                    if(strcmp(khalse[3] , "user.name")==0){
+                        FILE * adress = fopen("/home/aria/Desktop/address.txt" , "r");
+                        char cwd[1000];
+                        char cwd1[] = {"/.giutin/config"};
+                        char cwd2[] = {"1"};
+                        // printf("%d\n" , 123);
+                        while(fgets(cwd , 1000 , adress)!=NULL){
+                            cwd[strlen(cwd)-1] = '\0';
+                            char cww[1000];
+                            strcat(cwd , cwd1);
+                            strcpy(cww , cwd);
+                            printf("%s\n" , cww);
+                            FILE *file1 = fopen(cwd, "r");
+                            strcat(cwd , cwd2);
+                            FILE *file = fopen(cwd , "w");
+                            char name[40] , name2[40] , email[40] , email2[40] , branch[40] , branch2[40] , last[40] , current[50];
+                            int last_commit , current_commit_ID ;
+                            fscanf(file1 , "%s %s" ,name2 , name);
+                            fscanf(file1 , "%s %s" ,email2 ,  email);
+                            fscanf(file1 , "%s %d"  ,last ,  &last_commit);
+                            fscanf(file1 , "%s %d" , current , &current_commit_ID);
+                            fscanf(file1 , "%s %s" ,branch2 ,  branch);
+                            fprintf(file, "username: %s\n", khalse[4]);
+                            fprintf(file, "email: %s\n", email);
+                            fprintf(file, "last_commit_ID: %d\n", last_commit);
+                            fprintf(file, "current_commit_ID: %d\n", current_commit_ID);
+                            fprintf(file, "branch: %s", branch);
+                            fclose(file);
+                            fclose(file1);
+                            remove(cww);
+                            rename(cwd , cww);
+                        }
+                    }
+                    else if(strcmp(khalse[3] , "user.email")==0){
+                        FILE * adress = fopen("/home/aria/Desktop/address.txt" , "r");
+                        char cwd[1000];
+                        char cwd1[] = {"/.giutin/config"};
+                        char cwd2[] = {"1"};
+                        char cww[1000];
+                        while(fgets(cwd , 1000 , adress)!=NULL){
+                            cwd[strlen(cwd)-1]= '\0';
+                            strcat(cwd , cwd1);
+                            strcpy(cww , cwd);
+                            FILE *file1 = fopen(cwd, "r");
+                            strcat(cwd , cwd2);
+                            FILE *file = fopen(cwd , "w");
+                            char name[40] , name2[40] , email[40] , email2[40] , branch[40] , branch2[40] , last[40] , current[50];
+                            int last_commit , current_commit_ID ;
+                            fscanf(file1 , "%s %s" ,name2 , name);
+                            fscanf(file1 , "%s %s" ,email2 ,  email);
+                            fscanf(file1 , "%s %d"  ,last ,  &last_commit);
+                            fscanf(file1 , "%s %d" , current , &current_commit_ID);
+                            fscanf(file1 , "%s %s" ,branch2 ,  branch);
+                            fprintf(file, "username: %s\n", name);
+                            fprintf(file, "email: %s\n", khalse[4]);
+                            fprintf(file, "last_commit_ID: %d\n", last_commit);
+                            fprintf(file, "current_commit_ID: %d\n", current_commit_ID);
+                            fprintf(file, "branch: %s", branch);
+                            fclose(file);
+                            fclose(file1);
+                            remove(cww);
+                            rename(cwd , cww);
+                        }
+                    }
+                }
+            }
+            else if(strcmp(khalse[2] , "user.name")==0){
+                char cwd[1000];
+                getcwd(cwd , 1000);
+                char cwd1[] = {"/.giutin/config"};
+                char cwd2[]={"1"};
+                char cww[1000];
+                strcat(cwd , cwd1);
+                strcpy(cww  , cwd);
+                FILE *file1 = fopen(cwd , "r");
+                strcat(cwd , cwd2);
+                if(file1==NULL){
+                    printf("the file doesn't exist\n");
+                }
+                else{
                     char name[40] , name2[40] , email[40] , email2[40] , branch[40] , branch2[40] , last[40] , current[50];
                     int last_commit , current_commit_ID ;
                     fscanf(file1 , "%s %s" ,name2 , name);
@@ -119,39 +211,57 @@ int main(int JJ , char *khalse[]){
                     fscanf(file1 , "%s %d"  ,last ,  &last_commit);
                     fscanf(file1 , "%s %d" , current , &current_commit_ID);
                     fscanf(file1 , "%s %s" ,branch2 ,  branch);
-
-                    if(strcmp(khalse[3] , "user.name")==0){
-                        FILE *file = fopen(".giutin/config1", "w");
-                        fprintf(file, "username: %s\n", khalse[4]);
-                        fprintf(file, "email: %s\n", email);
-                        fprintf(file, "last_commit_ID: %d\n", last_commit);
-                        fprintf(file, "current_commit_ID: %d\n", current_commit_ID);
-                        fprintf(file, "branch: %s", branch);
-                        fclose(file);
-                        fclose(file1);
-                        remove(".giutin/config");
-                        rename(".giutin/config1" , ".giutin/config");
-                    }
-                    else if(strcmp(khalse[3] , "user.email")==0){
-                        FILE *file = fopen(".giutin/config1", "w");
-                        fprintf(file, "username: %s\n", name);
-                        fprintf(file, "email: %s\n", khalse[4]);
-                        fprintf(file, "last_commit_ID: %d\n", last_commit);
-                        fprintf(file, "current_commit_ID: %d\n", current_commit_ID);
-                        fprintf(file, "branch: %s", branch);
-                        fclose(file);
-                        fclose(file1);
-                        remove(".giutin/config");
-                        rename(".giutin/config1" , ".giutin/config");
-                    }
+                    FILE *file = fopen(cwd, "w");
+                    fprintf(file, "username: %s\n", khalse[3]);
+                    fprintf(file, "email: %s\n", email);
+                    fprintf(file, "last_commit_ID: %d\n", last_commit);
+                    fprintf(file, "current_commit_ID: %d\n", current_commit_ID);
+                    fprintf(file, "branch: %s", branch);
+                    fclose(file);
+                    fclose(file1);
+                    remove(cww);
+                    rename(cwd , cww);
                 }
             }
-            else if(strcmp(khalse[2] , "user.name")==0){
-                
-            }
             else if(strcmp(khalse[2] , "user.email")==0){
-
+                char cwd[1000];
+                getcwd(cwd , 1000);
+                // printf("%s\n" , cwd);
+                char cwd1[] = {"/.giutin/config"};
+                char cwd2[]={"1"};
+                char cww[1000];
+                strcat(cwd , cwd1);
+                strcpy(cww  , cwd);
+                // printf("%s\n" , cww);
+                FILE *file1 = fopen(cwd , "r");
+                strcat(cwd , cwd2);
+                if(file1==NULL){
+                    printf("the file doesn't exist\n");
+                }
+                else{
+                    char name[40] , name2[40] , email[40] , email2[40] , branch[40] , branch2[40] , last[40] , current[50];
+                    int last_commit , current_commit_ID ;
+                    fscanf(file1 , "%s %s" ,name2 , name);
+                    fscanf(file1 , "%s %s" ,email2 ,  email);
+                    fscanf(file1 , "%s %d"  ,last ,  &last_commit);
+                    fscanf(file1 , "%s %d" , current , &current_commit_ID);
+                    fscanf(file1 , "%s %s" ,branch2 ,  branch);
+                    FILE *file = fopen(cwd, "w");
+                    fprintf(file, "username: %s\n", name);
+                    fprintf(file, "email: %s\n", khalse[3]);
+                    fprintf(file, "last_commit_ID: %d\n", last_commit);
+                    fprintf(file, "current_commit_ID: %d\n", current_commit_ID);
+                    fprintf(file, "branch: %s", branch);
+                    fclose(file);
+                    fclose(file1);
+                    remove(cww);
+                    rename(cwd , cww);
+                    // printf("%s %s\n" , cww , cwd);
+                }
             }
         }
+        // if(file1!=NULL){
+        //     fclose(file1);
+        // }
     }
 }
