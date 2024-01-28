@@ -107,20 +107,12 @@ int main(int JJ , char *khalse[]){
         return run_init(JJ , khalse);
     }
     if(strcmp(khalse[1] , "config")==0){
-        // FILE *file1 = fopen(".giutin/config" , "r");
-        // char name[40] , name2[40] , email[40] , email2[40] , branch[40] , branch2[40] , last[40] , current[50];
-        // int last_commit , current_commit_ID ;
-        // fscanf(file1 , "%s %s" ,name2 , name);
-        // fscanf(file1 , "%s %s" ,email2 ,  email);
-        // fscanf(file1 , "%s %d"  ,last ,  &last_commit);
-        // fscanf(file1 , "%s %d" , current , &current_commit_ID);
-        // fscanf(file1 , "%s %s" ,branch2 ,  branch);
-        if(JJ <4 || JJ>=6){
+        if(JJ <4 ){
             printf("wrong\n");
         }
         else{
             if(strcmp(khalse[2] , "-global")==0){
-                if(JJ < 5){
+                if(JJ < 5 ){
                     printf("wrong\n");
                 }
                 else{
@@ -156,6 +148,7 @@ int main(int JJ , char *khalse[]){
                             remove(cww);
                             rename(cwd , cww);
                         }
+                        fclose(adress);
                     }
                     else if(strcmp(khalse[3] , "user.email")==0){
                         FILE * adress = fopen("/home/aria/Desktop/address.txt" , "r");
@@ -187,6 +180,10 @@ int main(int JJ , char *khalse[]){
                             remove(cww);
                             rename(cwd , cww);
                         }
+                        fclose(adress);
+                    }
+                    else if(strcmp(khalse[3] , "alias")==0){
+
                     }
                 }
             }
@@ -258,6 +255,9 @@ int main(int JJ , char *khalse[]){
                     rename(cwd , cww);
                     // printf("%s %s\n" , cww , cwd);
                 }
+            }
+            else if(strcmp(khalse[2] , "alias")==0){
+                
             }
         }
         // if(file1!=NULL){
