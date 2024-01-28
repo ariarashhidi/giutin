@@ -9,7 +9,6 @@
 void print_comnd(int JJ, char *khalse[]);
 int run_init(int argc, char * const argv[]);
 
-
 struct global
 {
     char mmd[100][100];
@@ -91,7 +90,6 @@ int create_configs(char *username, char *email) {
     return 0;
 }
 
-
 int main(int JJ , char *khalse[]){
     if(JJ<2){
         printf("eshtebahhhhhh\n");
@@ -104,19 +102,49 @@ int main(int JJ , char *khalse[]){
         return run_init(JJ , khalse);
     }
     if(strcmp(khalse[1] , "config")==0){
-        if(strcmp(khalse[2] , "(-global)")==0){
-            if(strcmp(khalse[3] , "user.name")==0){
+        if(JJ <4 || JJ>=6){
+            printf("wrong\n");
+        }
+        else{
+            if(strcmp(khalse[2] , "-global")==0){
+                printf("vvv\n");
+                if(JJ < 5){
+                    printf("wrong\n");
+                }
+                else{
+                    FILE *file1 = fopen(".giutin/config" , "r");
+                    char name[40] , email[40] , branch[40];
+                    int last_commit , current_commit_ID ;
+                    fscanf(file1 , "username: %s" , name);
+                    fscanf(file1 , "email: %s" , email);
+                    fscanf(file1 , "last_commit_ID: %d"  , &last_commit);
+                    fscanf(file1 , "current_commit_ID: %d" , &current_commit_ID);
+                    fscanf(file1 , "branch: %s" , branch);
+                    if(strcmp(khalse[3] , "user.name")==0){
+                        printf("vv\n");
+                        FILE *file = fopen(".giutin/config1", "w");
+                        fprintf(file, "username: %s\n", khalse[4]);
+                        fprintf(file, "email: %s\n", email);
+                        fprintf(file, "last_commit_ID: %d\n", last_commit);
+                        fprintf(file, "current_commit_ID: %d\n", current_commit_ID);
+                        fprintf(file, "branch: %s", branch);
+                        fclose(file);
+                        fclose(file1);
+                        remove(".giutin/config");
+                        rename(".giutin/config1" , ".giutin/config");
+
+                    }
+                    else if(strcmp(khalse[3] , "user.email")==0){
+
+                    }
+                }
+            }
+            else if(strcmp(khalse[2] , "user.name")==0){
+                
+            }
+            else if(strcmp(khalse[2] , "user.email")==0){
 
             }
-            else if(strcmp(khalse[3] , "user.email")==0){
-
-            }
-        }
-        else if(strcmp(khalse[2] , "user.name")==0){
-            
-        }
-        else if(strcmp(khalse[2] , "user.email")==0){
-
         }
     }
 }
