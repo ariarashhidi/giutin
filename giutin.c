@@ -491,6 +491,24 @@ int main(int JJ , char *khalse[]){
                     }
                 }
             }
+            else if(strcmp(khalse[2] , "-n")==0){
+                char cwd[1000];
+                getcwd(cwd , 1000);
+                char cwd1[]={"/.giutin/commits"};
+                strcat(cwd , cwd1);
+                // printf("%s\n" , cwd);
+                DIR* dir= opendir(cwd);
+                struct dirent *entry;
+                while((entry = readdir(dir))!=NULL){
+                    char r[100];
+                    strcpy(r , entry -> d_name);
+                    if(r[0] == '.'){
+                        continue;
+                    }
+                    printf("%s\n" , entry -> d_name);
+                }
+            }
         }
     }
+
 }
