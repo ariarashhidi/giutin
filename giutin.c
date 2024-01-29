@@ -371,6 +371,13 @@ int main(int JJ , char *khalse[]){
                 }
                 else{
                     DIR * dir = opendir(cwd);
+                    char *tok={"/"};
+                    char *token = strtok(cwd , tok);
+                    char namedir[100];
+                    while(token!=NULL){
+                        strcpy(namedir , token);
+                        token = strtok(NULL , tok);
+                    }
                     if (dir == NULL) {
                         printf("Error opening current directory\n");
                     }
@@ -397,6 +404,90 @@ int main(int JJ , char *khalse[]){
                             }
                         }
                         closedir(dir);
+                    }
+                }
+            }
+        }
+        else{
+            if(strcmp(khalse[2] , "-f")==0){
+                for(int i=3 ; i<JJ ; i++){
+                    if(strcmp(khalse[2] , "s*c")==0){
+
+                    }
+                    else{
+                        char cwd[1000];
+                        char cwd2[1000];
+                        char konon[1000];
+                        // char ff='/';
+                        getcwd(konon , 1000);
+                        strcat(konon , "/");
+                        // printf("%s\n" , konon);
+                        strcpy(cwd , khalse[2]);
+                        strcpy(cwd2 , konon);
+                        strcat(cwd2 , cwd);
+                        strcpy(cwd , cwd2);
+                        // printf("%s\n" , cwd);
+                        int v;
+                        v = is_regular_file(cwd);
+                        if(v==1){
+                            // printf("%s\n" , konon);
+                            int h=0;
+                            char tok[]={"/"};
+                            char *str ;
+                            // printf("%s\n" , cwd2);
+                            str = strtok(cwd2 , tok);
+                            // printf("%s\n" , str);
+                            char fg[100];
+                            while(str != NULL){
+                                strcpy(fg , str);
+                                str = strtok(NULL , tok);
+                            }
+                            // printf("%s\n" , fg);
+                            char cwd1[]={"/.giutin/commits/"};
+                            strcat(konon , cwd1);
+                            strcat(konon , fg);
+                            // printf("%s\n" , konon);
+                            FILE * ali = fopen(konon , "w");
+                            fclose(ali);
+                            copy_file(cwd , konon);
+                        }
+                        else{
+                            DIR * dir = opendir(cwd);
+                            char *tok={"/"};
+                            char *token = strtok(cwd , tok);
+                            char namedir[100];
+                            while(token!=NULL){
+                                strcpy(namedir , token);
+                                token = strtok(NULL , tok);
+                            }
+                            if (dir == NULL) {
+                                printf("Error opening current directory\n");
+                            }
+                            else{
+                                struct dirent *entry;
+                                while ((entry = readdir(dir)) != NULL) {
+                                    char konon[1000];
+                                    getcwd(konon , 1000);
+                                    strcat(konon , "/");
+                                    strcpy(cwd , khalse[2]);
+                                    strcpy(cwd2 , konon);
+                                    strcat(cwd2 , cwd);
+                                    if (entry->d_type == DT_REG){
+                                        char desn[1000];
+                                        strcpy(desn , entry->d_name);
+                                        strcat(cwd2 , "/");
+                                        strcat(cwd2 , entry->d_name);
+                                        char cwd1[]={"/.giutin/commits/"};
+                                        strcat(konon , cwd1);
+                                        strcat(konon , desn);
+                                        FILE* aria = fopen(konon , "w");
+                                        fclose(aria);
+                                        copy_file(cwd2 , konon);
+                                    }
+                                }
+                                closedir(dir);
+                            }
+                        }
                     }
                 }
             }
