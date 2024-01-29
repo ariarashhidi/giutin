@@ -58,10 +58,15 @@ int run_init(int argc, char * const argv[]) {
     if (!exists) {
         if (mkdir(".giutin", 0755) != 0) return 1;
         char cwd[1000];
+        char commtis[]={"/.giutin/commits1.txt"};
         getcwd(cwd , 1000);
         FILE* file = fopen("/home/aria/Desktop/address.txt" , "a");
         fprintf(file , "%s\n" , cwd);
         // printf("%s\n" , cwd);
+        fclose(file);
+        strcat(cwd , commtis);
+        FILE* aria =  fopen(cwd , "w");
+        fclose(aria);
         return create_configs("aria" , "ariarashidiqw@gmail.com");
     } else {
         perror("giutin repository has already initialized");
@@ -183,7 +188,29 @@ int main(int JJ , char *khalse[]){
                         fclose(adress);
                     }
                     else if(strcmp(khalse[3] , "alias")==0){
-
+                        char new[1000];
+                        char past[1000];
+                        strcpy(new , khalse[4]);
+                        strcpy(past , khalse[5]);
+                        char cwd[1000];
+                        FILE * adress = fopen("/home/aria/Desktop/address.txt" , "r");
+                        while(fgets(cwd , 1000 , adress)!=NULL){
+                            cwd[strlen(cwd)-1]='\0';
+                            char cwd1[]={"/.giutin/commits1.txt"};
+                            strcat(cwd , cwd1);
+                            printf("%s\n" , cwd);
+                            FILE * file = fopen(cwd , "r");
+                            if(file == NULL){
+                                printf("wrong\n");
+                                fclose(file);
+                            }
+                            else{
+                                fclose(file);
+                                FILE *aria = fopen(cwd , "a");
+                                fprintf(aria , "%s %s\n" , past , new); 
+                                fclose(aria);  
+                            }
+                        }
                     }
                 }
             }
@@ -257,7 +284,25 @@ int main(int JJ , char *khalse[]){
                 }
             }
             else if(strcmp(khalse[2] , "alias")==0){
-                
+                char new[1000];
+                char past[1000];
+                strcpy(new , khalse[3]);
+                strcpy(past , khalse[4]);
+                char cwd[1000];
+                getcwd(cwd , 1000);
+                char cwd1[]={"/.giutin/commits1.txt"};
+                strcat(cwd , cwd1);
+                FILE * file = fopen(cwd , "r");
+                if(file == NULL){
+                    printf("wrong\n");
+                    fclose(file);
+                }
+                else{
+                    fclose(file);
+                    FILE *aria = fopen(cwd , "a");
+                    fprintf(aria , "%s %s\n" , past , new); 
+                    fclose(aria);  
+                }
             }
         }
         // if(file1!=NULL){
