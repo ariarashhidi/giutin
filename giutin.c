@@ -107,19 +107,53 @@ int create_configs(char *username, char *email) {
     
     // create commits folder
     if (mkdir(".giutin/commits", 0755) != 0) return 1;
-
+    // poshe commits be stage eshare darad
+    if(mkdir(".giutin/commitsasl" , 0755) != 0) return 1;
     // create files folder
     if (mkdir(".giutin/files", 0755) != 0) return 1;
-
-    file = fopen(".giutin/staging", "w");
-    fclose(file);
 
     file = fopen(".giutin/tracks", "w");
     fclose(file);
 
     return 0;
 }
+int reset (char * link){
+    int v;
+    v =is_regular_file(link);
+    if(v==1){
+        char namefile[100];
+        char *token = "/";
+        char *str = strtok(link , token);
+        while(str!=NULL){
+            strcpy(namefile , str);
+            str = strtok(NULL , token);
+        }
+        printf("%s\n" , namefile);
+        char cwd[1000];
+        getcwd(cwd , 1000);
+        printf("%s\n" , cwd);
+        char commit[]={"/.giutin/commits"};
+        char a[]="/";
+        strcat(cwd , commit);
+        struct dirent *entry;
+        DIR *dir = opendir(cwd);
+        while ((entry = readdir(dir)) != NULL) {
+            if (strcmp(entry->d_name, namefile) == 0){
+                strcat(cwd , a);
+                strcat(cwd , namefile);
+                printf("%s\n" , cwd);
+                remove(cwd);
+                break;
+            }
+                
+        }
+        closedir(dir);
 
+    }
+    else{
+
+    }
+}
 int main(int JJ , char *khalse[]){
     if(JJ<2){
         printf("eshtebahhhhhh\n");
@@ -411,7 +445,7 @@ int main(int JJ , char *khalse[]){
         else{
             if(strcmp(khalse[2] , "-f")==0){
                 for(int i=3 ; i<JJ ; i++){
-                    if(strcmp(khalse[2] , "s*c")==0){
+                    if(strcmp(khalse[i] , "s*c")==0){
 
                     }
                     else{
@@ -422,7 +456,7 @@ int main(int JJ , char *khalse[]){
                         getcwd(konon , 1000);
                         strcat(konon , "/");
                         // printf("%s\n" , konon);
-                        strcpy(cwd , khalse[2]);
+                        strcpy(cwd , khalse[i]);
                         strcpy(cwd2 , konon);
                         strcat(cwd2 , cwd);
                         strcpy(cwd , cwd2);
@@ -469,7 +503,7 @@ int main(int JJ , char *khalse[]){
                                     char konon[1000];
                                     getcwd(konon , 1000);
                                     strcat(konon , "/");
-                                    strcpy(cwd , khalse[2]);
+                                    strcpy(cwd , khalse[i]);
                                     strcpy(cwd2 , konon);
                                     strcat(cwd2 , cwd);
                                     if (entry->d_type == DT_REG){
@@ -510,5 +544,13 @@ int main(int JJ , char *khalse[]){
             }
         }
     }
-
+    else if(strcmp(khalse[1] , "rest")==0){
+        char cwd1[1000];
+        char aa[]="/";
+        getcwd(cwd1 , 1000);
+        strcat(cwd1 , aa);
+        strcat(cwd1 , khalse[2]);
+        printf("%s cwd1\n" , cwd1);
+        reset(cwd1);
+    }
 }
