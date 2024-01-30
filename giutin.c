@@ -189,6 +189,80 @@ int reset (char * link){
         }
     }
 }
+int stts(char * commit , char * aknon , char *giutin){
+    // akhari jaye commitasli
+    // printf("%s\n%s\n%s\n" , commit , aknon , giutin);
+    int test=0;
+    int test1=0;
+    char cwd1[1000];
+    char cwd2[1000];
+    char bb[]={"/"};
+    strcat(commit , bb);
+    strcpy(cwd1 , commit);
+    struct dirent *entry;
+    // printf("%s\n" , commit);
+    DIR *dir = opendir(commit);
+    if(dir == NULL){
+        printf("new\n");
+    }
+    while((entry = readdir(dir))!=NULL && entry->d_name[0]!='.'){
+        // printf("%s\n" , entry->d_name);
+        strcpy(cwd1 , commit);
+        test1=0;
+        test=0;
+        struct dirent *entry2;
+        DIR *dir2 = opendir(aknon);
+        while((entry2 = readdir(dir2))!= NULL){
+            strcpy(cwd2 , aknon);
+            if(strcmp(entry ->d_name , entry2 ->d_name)==0){
+                // printf("%s\n" , entry2->d_name);
+                struct dirent *entry3;
+                DIR *dir3 = opendir(giutin);
+                while((entry3 = readdir(dir3))!= NULL){
+                    if(strcmp(entry ->d_name , entry3->d_name)==0){
+                        printf("+A\n");
+                        test1++;
+                        break;
+                    }
+                }
+                if(test1==0){
+                    char filename[100];
+                    strcpy(filename , entry->d_name);
+                    strcat(cwd1 , bb);
+                    strcat(cwd1 , filename);
+                    strcat(cwd2 , bb);
+                    strcat(cwd2 , filename);
+                    FILE *file = fopen(cwd1 , "r");
+                    FILE *file1 = fopen(cwd2 , "r");
+                    if(file1 == NULL){
+                        printf("+D/n");
+                    }
+                    else{
+                        int jaj=0;
+                        int aja =0;
+                        char a[1000];
+                        char aaa[1000];
+                        while(fgets(a , 1000 , file)!=NULL){
+                            fgets(aaa , 1000 , file1);
+                            if(strcmp(a , aaa)==0){
+                                jaj++;
+                            }
+                            aja++;
+                        }
+                        if(aja != jaj){
+                            printf("+M\n");
+                        }
+                    }
+                }
+                test ++;
+                break;
+            }
+        }
+        if(test == 0){
+            printf("+D\n");
+        }
+    }
+}
 int main(int JJ , char *khalse[]){
     if(JJ<2){
         printf("eshtebahhhhhh\n");
@@ -587,5 +661,50 @@ int main(int JJ , char *khalse[]){
         strcat(cwd1 , khalse[2]);
         printf("%s cwd1\n" , cwd1);
         reset(cwd1);
+    }
+    else if(strcmp(khalse[1] , "status")==0){
+        char cwd[1000];
+        getcwd(cwd , 1000);
+        char cwd12[1000];
+        strcpy(cwd12 , cwd);
+        char *token;
+        char *tok={"/"};
+        printf("%s\n" , cwd);
+        token = strtok(cwd , tok);
+        int test=0;
+        int test1=0;
+        char ali[1000];
+        char l[]={"/"};
+        while(token != NULL){
+            if(test1 == 0){
+                strcpy(ali , l);
+                strcat(ali , token);
+            }
+            else{
+                strcat(ali , token);
+            }
+            strcat(ali , l);
+            test1++;
+            if(strcmp(token , ".giutin")== 0){
+                test++;
+                break;
+            }
+            token = strtok (NULL , tok);
+        }
+        printf("%d\n" , test1);
+        if(test == 0){
+            printf("wrong golom\n");
+        }
+        else{
+            printf("%s\n" , ali);
+            char cc[]={"commits"};
+            char cd[]={"commitsasl"};
+            char v[1000];
+            strcpy(v , ali);
+            strcat(v , cd);
+            strcat(ali, cc);
+            printf("%s\n%s\n" , ali , v);
+            stts(ali , cwd12 , v);
+        }
     }
 }
