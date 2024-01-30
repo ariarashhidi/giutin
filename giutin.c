@@ -151,7 +151,42 @@ int reset (char * link){
 
     }
     else{
+        char cwd[1000];
+        char cwd3[1000];
+        getcwd(cwd , 1000);
+        printf("%s\n" , cwd);
+        char commit[]={"/.giutin/commits"};
+        char a[]={"/"};
+        strcat(cwd , commit);
+        printf("%s\n" , cwd);
+        struct dirent *entry;
+        // struct dirent *entry2;
+        DIR *dir = opendir(cwd);
+        // DIR *dir1 = opendir(link);
+        if(dir == NULL){
+            printf("there is no directory\n");
+        }
+        else{
+            while((entry = readdir(dir)) != NULL){
+                struct dirent *entry2;
+                DIR *dir1 = opendir(link);
+                if(dir1 ==NULL){
+                    printf("there is no directory\n");
+                    return 0; 
+                }
+                while((entry2 = readdir(dir1)) != NULL){
+                    if(strcmp(entry -> d_name , entry2 -> d_name)==0){
+                        char filename[100];
+                        strcpy(filename , entry2 -> d_name);
+                        strcpy(cwd3 , cwd);
+                        strcat(cwd3 , a);
+                        strcat(cwd3 , filename);
+                        remove(cwd3);
 
+                    }
+                }
+            }
+        }
     }
 }
 int main(int JJ , char *khalse[]){
