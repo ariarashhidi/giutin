@@ -263,6 +263,25 @@ int stts(char * commit , char * aknon , char *giutin){
         }
     }
 }
+int comiunito(char *commit , char *stages , char *name){
+    char a[]="/";
+    char c[1000];
+    strcat(commit , a);
+    strcat(commit , name);
+    printf("%s\n" , commit);
+    printf("%s\n" , stages);
+    if(mkdir(commit , 0755) != 0) return 1;
+    struct dirent *entry;
+    struct dirent *entry2;
+    DIR *dir = opendir(stages);
+    while((entry = readdir(dir)) != NULL){
+        char adressdes[1000];
+        char adresssource[1000];
+        strcpy()
+    }
+
+
+}
 int main(int JJ , char *khalse[]){
     if(JJ<2){
         printf("eshtebahhhhhh\n");
@@ -705,6 +724,27 @@ int main(int JJ , char *khalse[]){
             strcat(ali, cc);
             printf("%s\n%s\n" , ali , v);
             stts(ali , cwd12 , v);
+        }
+    }
+    else if(strcmp(khalse[1] , "commit")==0){
+        if(strcmp(khalse[2] , "-m")!= 0 ){
+            printf("wrong input!!:)\n");
+        }
+        else{
+            char b[73];
+            strcpy(b , khalse[3]);
+            char cmd[1000];
+            getcwd(cmd , 1000);
+            printf("%s\n" , cmd);
+            char stage[]={"/.giutin/commits"};
+            char stage1[1000];
+            strcpy(stage1 , cmd);
+            strcat(stage1 , stage);
+            char commits[]={"/.giutin/commitsasl"};
+            char commit[1000];
+            strcpy(commit , cmd);
+            strcat(commit , commits);
+            comiunito(commit , stage1 , b);
         }
     }
 }
