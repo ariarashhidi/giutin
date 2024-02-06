@@ -272,12 +272,24 @@ int comiunito(char *commit , char *stages , char *name){
     printf("%s\n" , stages);
     if(mkdir(commit , 0755) != 0) return 1;
     struct dirent *entry;
-    struct dirent *entry2;
+    // struct dirent *entry2;
     DIR *dir = opendir(stages);
     while((entry = readdir(dir)) != NULL){
         char adressdes[1000];
+        strcpy(adressdes , commit);
         char adresssource[1000];
-        strcpy()
+        strcpy(adresssource , stages);
+        // strcpy()
+        if(entry->d_name[0]!='.'){
+            printf("%s\n" , entry->d_name);
+            strcat(adressdes , a);
+            strcat(adressdes , entry->d_name);
+            strcat(adresssource , a);
+            strcat(adresssource , entry->d_name);
+            printf("%s\n%s\n" , adressdes , adresssource);
+            copy_file(adresssource , adressdes);
+            remove(adresssource);
+        }
     }
 
 
