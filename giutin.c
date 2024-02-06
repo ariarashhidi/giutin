@@ -112,6 +112,7 @@ int create_configs(char *username, char *email) {
     // create files folder
     if (mkdir(".giutin/files", 0755) != 0) return 1;
 
+    if(mkdir(".giutin/master" , 0775)!=0) return 1;
     file = fopen(".giutin/tracks", "w");
     fclose(file);
 
@@ -757,6 +758,68 @@ int main(int JJ , char *khalse[]){
             strcpy(commit , cmd);
             strcat(commit , commits);
             comiunito(commit , stage1 , b);
+        }
+    }
+    else if(strcmp(khalse[1] , "log")==0){
+        char commit[1000];
+        getcwd(commit , 1000);
+        char a[]={"/.giutin/commitsasl"};
+        strcat(commit , a);
+        // printf("%s\n" , commit);
+        int tedad=0;
+        struct dirent* entry;
+        DIR *dir=opendir(commit);
+        while((entry = readdir(dir))!=NULL){
+            if(entry->d_name[0]!='.'){
+                printf("%s\n" , entry->d_name);
+                tedad++;
+            }
+        }
+        printf("%d\n" , tedad);
+    }
+    else if(strcmp(khalse[1] , "branch")==0){
+        if(JJ == 2){
+            int tedad = 0;
+            char siameslebarf[1000];
+            getcwd(siameslebarf , 1000);
+            char sibil[]={"/.giutin/master"};
+            strcat(siameslebarf , sibil);
+            struct dirent* entry;
+            DIR *dir = opendir(siameslebarf);
+            while((entry = readdir(dir))!=NULL){
+                if(entry->d_name[0]!='.'){
+                    printf("%s\n" , entry->d_name);
+                    tedad++;
+                }
+            }
+            if(tedad==0){
+                printf("there is no master commit\n");
+            }
+        }
+        else{
+            int t = 0;
+            char siameslebarf[1000];
+            getcwd(siameslebarf , 1000);
+            char sibil[]={"/.giutin/master"};
+            strcat(siameslebarf , sibil);
+            struct dirent* entry;
+            DIR *dir = opendir(siameslebarf);
+            while((entry=readdir(dir))!=NULL){
+                if(entry->d_name[0]!='.'){
+                    if(strcmp(khalse[2] , entry->d_name)==0){
+                        printf("this name has already token\n");
+                        t++;
+                        break;
+                    }
+                }
+            }
+            if(t==0){
+                char a[]={"/"};
+                strcat(siameslebarf , a);
+                strcat(siameslebarf , khalse[2]);
+                if(mkdir(siameslebarf , 0775)!=0);
+                
+            }
         }
     }
 }
